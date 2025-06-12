@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Nav() {
   return (
@@ -12,7 +13,9 @@ export default function Nav() {
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">
             <li>
-              <a className=" btn btn-neutral rounded-xl mr-2">Transactions</a>
+              <Link to="/dashboard" className=" btn btn-ghost rounded-xl mr-2">
+                Dashboard
+              </Link>
             </li>
             <li>
               <details>

@@ -1,0 +1,49 @@
+import Nav from "../components/Nav";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../components/ui/table";
+
+export default function Transactions() {
+  return (
+    <div>
+      <Nav />
+      <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-40 ">
+        <div className="flex flex-col gap-2 px-3 py-4">
+          <h1 className="text-4xl font-bold">Transactions</h1>
+        </div>
+        {/* transactions table */}
+        <Table className="w-[60vw]">
+          <TableCaption>Listes de toutes les transactions</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px] text-indigo-800">
+                Description
+              </TableHead>
+              <TableHead className="text-right text-indigo-800">
+                Categorie
+              </TableHead>
+              <TableHead className="text-right text-indigo-800">
+                Montant
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium capitalize">INV001</TableCell>
+              <TableCell className="font-medium text-right capitalize">
+                busness
+              </TableCell>
+              <TableCell className="text-right">FCFA 250.00</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
+}

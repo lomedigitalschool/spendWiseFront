@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "../components/header";
 import { TransactionsModal } from "../components/TransactionModal";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const user = "Ro";
@@ -15,9 +16,9 @@ export default function Dashboard() {
     },
     {
       id: 2,
-      amount: 100,
+      amount: 100000,
       type: "revenu",
-      descritption: "benefice sur vente de telephone",
+      descritption: "vente de telephone",
       category: "business",
     },
   ];
@@ -55,7 +56,14 @@ export default function Dashboard() {
         </div>
         {/* //transaction */}
         <div className="space-y-4">
-          <h1 className="font-bold text-xl indent-1">Transactions recentes</h1>
+          <div className="flex justify-between">
+            <h1 className="font-bold text-xl indent-1">
+              Transactions recentes
+            </h1>
+            <Link to="/transactions" className=" btn btn-sm btn-ghhost">
+              Voir plus
+            </Link>{" "}
+          </div>
           <ul>
             {transactions.map((transaction) => (
               <li key={transaction.id}>
@@ -70,11 +78,11 @@ export default function Dashboard() {
                     <h2 className="font-semibold">
                       {transaction.descritption}
                     </h2>
-                    <span className="text-indigo-800">
+                    <span className="text-gray-800 capitalize">
                       {transaction.category}
                     </span>
                   </div>
-                  <p className="font-semibold">
+                  <p className="font-semibold ">
                     {transaction.type === "revenu" ? "+" : "-"} FCFA{" "}
                     {transaction.amount}
                   </p>
