@@ -1,4 +1,6 @@
+import { useState } from "react";
 import Header from "../components/header";
+import { TransactionsModal } from "../components/TransactionModal";
 
 export default function Dashboard() {
   const user = "Ro";
@@ -19,10 +21,13 @@ export default function Dashboard() {
       category: "business",
     },
   ];
+
+  const [transactionsType, setTransactionType] = useState("depense");
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <>
       <Header />
-
       {/* under header */}
       <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-40 ">
         <div className="flex flex-col gap-2 px-3">
@@ -53,7 +58,7 @@ export default function Dashboard() {
           <h1 className="font-bold text-xl indent-1">Transactions recentes</h1>
           <ul>
             {transactions.map((transaction) => (
-              <li>
+              <li key={transaction.id}>
                 <div
                   className={
                     transaction.type === "revenu"
@@ -79,10 +84,27 @@ export default function Dashboard() {
           </ul>
         </div>
         <div className="flex gap-4 justify-end my-4">
-          <button className="btn btn-primary">+ Revenu</button>
-          <button className="btn btn-neutral">+ depense</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => (setTransactionType("revenu"), setShowModal(true))}
+          >
+            {" "}
+            + Revenu
+          </button>
+          <button
+            className="btn btn-neutral"
+            onClick={() => (setTransactionType("depense"), setShowModal(true))}
+          >
+            {" "}
+            + Depense
+          </button>{" "}
         </div>
-      </div>
+        <TransactionsModal
+          transactionType={transactionsType}
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+        />
+      </div>{" "}
     </>
   );
 }
