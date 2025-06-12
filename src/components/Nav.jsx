@@ -6,9 +6,9 @@ export default function Nav() {
     <>
       <div className="navbar bg-base-100 shadow-sm px-8">
         <div className="flex-1">
-          <a className="cursor-pointer text-xl font-black">
+          <Link to="/dashboard" className="cursor-pointer text-xl font-black">
             Spend<span className="text-indigo-800">Wise</span>
-          </a>
+          </Link>
         </div>
         <div className="flex-none">
           <ul className="menu menu-horizontal px-1">

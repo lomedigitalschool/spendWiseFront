@@ -1,30 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/header";
 import { TransactionsModal } from "../components/TransactionModal";
 import { Link } from "react-router-dom";
+import { useTransactionsStore } from "../store/transactionsStores";
 
 export default function Dashboard() {
   const user = "Ro";
   const accountBalance = 300;
-  const transactions = [
-    {
-      id: 1,
-      amount: 500,
-      type: "depense",
-      descritption: "ravitaillement pour la semaine",
-      category: "divertissement",
-    },
-    {
-      id: 2,
-      amount: 100000,
-      type: "revenu",
-      descritption: "vente de telephone",
-      category: "business",
-    },
-  ];
-
   const [transactionsType, setTransactionType] = useState("depense");
   const [showModal, setShowModal] = useState(false);
+  const { transactions, setTransactions } = useTransactionsStore();
+
+  const [someTransactions, setSomeTransaction] = useState([]);
+
+  useEffect(() => {
+    const transac = [
+      {
+        id: 1,
+        amount: 500,
+        type: "depense",
+        description: "ravitaillement pour la semaine",
+        category: "divertissement",
+      },
+      {
+        id: 2,
+        amount: 100000,
+        type: "revenu",
+        description: "vente de telephone",
+        category: "business",
+      },
+    ];
+
+    setTransactions(transac);
+  }, []);
 
   return (
     <>
@@ -75,16 +83,22 @@ export default function Dashboard() {
                   }
                 >
                   <div>
-                    <h2 className="font-semibold">
-                      {transaction.descritption}
-                    </h2>
+                    <h2 className="font-semibold">{transaction.description}</h2>
                     <span className="text-gray-800 capitalize">
                       {transaction.category}
                     </span>
                   </div>
-                  <p className="font-semibold ">
+
+                  <p className="font-semibold flex gap-4 ">
                     {transaction.type === "revenu" ? "+" : "-"} FCFA{" "}
-                    {transaction.amount}
+                    {transaction.amount}{" "}
+                    <Link to="#" className=" mt-1.5">
+                      <img
+                        className="w-4 h-4"
+                        src="src/assets/trash-close.png"
+                        alt="trash icon"
+                      />
+                    </Link>
                   </p>
                 </div>
               </li>

@@ -8,8 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
+import { useTransactionsStore } from "../store/transactionsStores";
 
 export default function Transactions() {
+  const { transactions } = useTransactionsStore();
+  console.log(transactions);
+
   return (
     <div>
       <Nav />
@@ -28,19 +32,38 @@ export default function Transactions() {
               <TableHead className="text-right text-indigo-800">
                 Categorie
               </TableHead>
+              <TableHead className="text-right text-indigo-800">Date</TableHead>
+
               <TableHead className="text-right text-indigo-800">
                 Montant
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            <TableRow>
-              <TableCell className="font-medium capitalize">INV001</TableCell>
-              <TableCell className="font-medium text-right capitalize">
-                busness
-              </TableCell>
-              <TableCell className="text-right">FCFA 250.00</TableCell>
-            </TableRow>
+            {transactions &&
+              transactions.map((transaction) => (
+                <TableRow>
+                  <TableCell className="font-medium capitalize">
+                    {transaction?.description}
+                  </TableCell>
+                  <TableCell className="font-medium text-right capitalize">
+                    {transaction?.category}
+                  </TableCell>
+                  <TableCell className="font-medium  capitalize">
+                    {transaction?.date}
+                  </TableCell>
+
+                  <TableCell
+                    className={
+                      transaction?.type === "revenu"
+                        ? "text-green-500 text-right"
+                        : "text-rose-800 text-right"
+                    }
+                  >
+                    FCFA {transaction?.amount}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </div>
