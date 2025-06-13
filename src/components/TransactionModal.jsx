@@ -1,13 +1,21 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { Schema } from "../Schema/Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-export function TransactionsModal({ transactionType, showModal, onClose }) {
+export function TransactionsModal({
+  transactionType,
+  showModal,
+  onClose,
+  modalType,
+  selectedTransaction,
+}) {
   const {
     register,
+    setValue,
+    getValues,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
@@ -15,8 +23,21 @@ export function TransactionsModal({ transactionType, showModal, onClose }) {
     resolver: yupResolver(Schema),
   });
 
-  const handleClose = async () => {
-    await reset();
+  const fields = ["description", "amount", "date", "category"];
+
+  if (selectedTransaction && modalType === "edit") {
+    fields.forEach((field) => {
+      if (selectedTransaction[field] !== undefined)
+        setValue(field, selectedTransaction[field]);
+    });
+  } else if (selectedTransaction && modalType === "create") {
+    fields.forEach((field) => {
+      setValue(field, "");
+    });
+  }
+
+  const handleClose = () => {
+    reset();
     onClose();
   };
 

@@ -9,11 +9,20 @@ import {
   TableRow,
 } from "../components/ui/table";
 import { useTransactionsStore } from "../store/transactionsStores";
-import { Link } from "react-router-dom";
+import { TransactionsModal } from "../components/TransactionModal";
 
 export default function Transactions() {
   const { transactions } = useTransactionsStore();
-  console.log(transactions);
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    console.log("hello edit");
+  };
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log("hello delete");
+  };
 
   return (
     <div>
@@ -46,7 +55,7 @@ export default function Transactions() {
           <TableBody>
             {transactions &&
               transactions.map((transaction) => (
-                <TableRow>
+                <TableRow key={transaction.id}>
                   <TableCell className="font-medium capitalize">
                     {transaction?.description}
                   </TableCell>
@@ -67,19 +76,38 @@ export default function Transactions() {
                     FCFA {transaction?.amount}
                   </TableCell>
 
-                  <TableCell className="">
-                    <Link to="#" className=" mt-1.5">
+                  <TableCell className="flex justify-end gap-2">
+                    <button
+                      className=" cursor-pointer hover:scale-105"
+                      onClick={handleEdit}
+                    >
                       <img
-                        className="w-4 h-4"
+                        className="w-4 h-4 "
+                        src="src/assets/editer.png"
+                        alt="trash icon"
+                      />
+                    </button>
+                    <button
+                      onClick={handleDelete}
+                      className="  cursor-pointer mt-1 hover:scale-105"
+                    >
+                      <img
+                        className="w-4 h-4 "
                         src="src/assets/trash-close.png"
                         alt="trash icon"
                       />
-                    </Link>
+                    </button>
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
+        <TransactionsModal
+          transactionType={transactionsType}
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+          modalType={modalType}
+        />
       </div>
     </div>
   );

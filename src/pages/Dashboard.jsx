@@ -2,16 +2,28 @@ import { useEffect, useState } from "react";
 import Header from "../components/header";
 import { TransactionsModal } from "../components/TransactionModal";
 import { Link } from "react-router-dom";
-import { useTransactionsStore } from "../store/transactionsStores";
+import {
+  useTransactionsStore,
+  useTransactionTypeStore,
+} from "../store/transactionsStores";
+import {
+  useModaltypeStore,
+  useSelectedTransaction,
+  useShowModal,
+} from "../store/modalTypeStore";
 
 export default function Dashboard() {
   const user = "Ro";
   const accountBalance = 300;
-  const [transactionsType, setTransactionType] = useState("depense");
-  const [showModal, setShowModal] = useState(false);
+  const { transactionType, setTransactionType } = useTransactionTypeStore();
+  const { showModal, setShowModal } = useShowModal();
   const { transactions, setTransactions } = useTransactionsStore();
+  const { modalType, setModalType } = useModaltypeStore();
 
   const [someTransactions, setSomeTransaction] = useState([]);
+
+  const { selectedTransaction, setSelectedTransaction } =
+    useSelectedTransaction();
 
   useEffect(() => {
     const transac = [
@@ -33,6 +45,11 @@ export default function Dashboard() {
 
     setTransactions(transac);
   }, []);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log("hello delete");
+  };
 
   return (
     <>
@@ -92,13 +109,32 @@ export default function Dashboard() {
                   <p className="font-semibold flex gap-4 ">
                     {transaction.type === "revenu" ? "+" : "-"} FCFA{" "}
                     {transaction.amount}{" "}
-                    <Link to="#" className=" mt-1.5">
-                      <img
-                        className="w-4 h-4"
-                        src="src/assets/trash-close.png"
-                        alt="trash icon"
-                      />
-                    </Link>
+                    <div className="flex gap-1.5 items-start ">
+                      <button
+                        className=" cursor-pointer  hover:scale-105 mt-1"
+                        onClick={() => {
+                          setModalType("edit");
+                          setSelectedTransaction(transaction);
+                          setShowModal(true);
+                        }}
+                      >
+                        <img
+                          className="w-4 h-4 "
+                          src="src/assets/editer.png"
+                          alt="trash icon"
+                        />
+                      </button>
+                      <button
+                        onClick={handleDelete}
+                        className="  cursor-pointer mt-1 hover:scale-105"
+                      >
+                        <img
+                          className="w-4 h-4 "
+                          src="src/assets/trash-close.png"
+                          alt="trash icon"
+                        />
+                      </button>
+                    </div>
                   </p>
                 </div>
               </li>
@@ -108,23 +144,33 @@ export default function Dashboard() {
         <div className="flex gap-4 justify-end my-4">
           <button
             className="btn btn-primary"
-            onClick={() => (setTransactionType("revenu"), setShowModal(true))}
+            onClick={() => (
+              setTransactionType("revenu"),
+              setShowModal(true),
+              setModalType("create")
+            )}
           >
             {" "}
             + Revenu
           </button>
           <button
             className="btn btn-neutral"
-            onClick={() => (setTransactionType("depense"), setShowModal(true))}
+            onClick={() => (
+              setTransactionType("depense"),
+              setShowModal(true),
+              setModalType("create")
+            )}
           >
             {" "}
             + Depense
           </button>{" "}
         </div>
         <TransactionsModal
-          transactionType={transactionsType}
+          transactionType={transactionType}
           showModal={showModal}
           onClose={() => setShowModal(false)}
+          modalType={modalType}
+          selectedTransaction={selectedTransaction}
         />
       </div>{" "}
     </>
