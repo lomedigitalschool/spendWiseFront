@@ -1,69 +1,108 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { useForm } from "react-hook-form";
+import { Schema } from "../Schema/Schema";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export function TransactionsModal({ transactionType, showModal, onClose }) {
-  const handleClose = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(Schema),
+  });
+
+  const handleClose = async () => {
+    await reset();
     onClose();
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
     <Dialog open={showModal} onOpenChange={handleClose} className="">
-      <form>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader className="">
-            <DialogTitle className="text-center">
-              Ajouter un{transactionType === "revenu" ? "" : "e"}{" "}
-              {transactionType}
-            </DialogTitle>
-          </DialogHeader>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader className="">
+          <DialogTitle className="text-center">
+            Ajouter un{transactionType === "revenu" ? "" : "e"}{" "}
+            {transactionType}
+          </DialogTitle>
+        </DialogHeader>
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           {/* description */}
-          <div className="flex flex-col gap-4 mx-4 mt-8">
-            <Label Label htmlFor="description ">
-              Descrption <span className="text-indigo-800">*</span>
+          <div className="flex flex-col gap-4 mx-4 ">
+            <Label htmlFor="description ">
+              Descrption<span className="text-indigo-800">*</span>
             </Label>
             <Input
+              id="description"
               type="text"
-              placeholder="Une description de la transaction ex: achat de chaussure"
-              className="border-gray-600"
+              {...register("description")}
+              placeholder="ex: achat de chaussure"
+              className={
+                errors.description ? "border-rose-700" : "border-gray-600"
+              }
             />
           </div>
+          {errors.description && (
+            <p className="text-rose-800 text-center">
+              {errors.description.message}
+            </p>
+          )}
           {/* amount */}
           <div className="flex flex-col gap-4 mx-4">
             <Label htmlFor="amount">
-              Montant <span className="text-indigo-800">*</span>
+              Montant<span className="text-indigo-800">*</span>
             </Label>
             <Input
+              id="amount"
               type="text"
+              {...register("amount")}
               placeholder="Montant de la transaction"
               className="border-gray-600"
             />
           </div>
-
+          {errors.amount && (
+            <p className="text-rose-800 text-center">{errors.amount.message}</p>
+          )}
+          {/* date */}
+          <div className="flex flex-col gap-4 mx-4">
+            <Label htmlFor="date">
+              Date<span className="text-indigo-800">*</span>
+            </Label>
+            <Input
+              id="date"
+              type="date"
+              {...register("date")}
+              placeholder="Montant de la transaction"
+              className="border-gray-600"
+            />
+          </div>
+          {errors.date && (
+            <p className="text-rose-800 text-center">{errors.date.message}</p>
+          )}
           {/* categories */}
           <div className="flex flex-col gap-4 mx-4">
             <Label htmlFor="catergory">Categories</Label>
             <select
-              defaultValue="Pick a color"
+              id="category"
+              {...register("category")}
               className="select select-lg cursor-pointer duration-100 ease-in"
             >
-              <option>choisissez une categorie</option>
-              <option>Alimentation</option>
+              <option value="">choisissez une categorie</option>
+              <option value="">Alimentation</option>
               <option>Business</option>
               <option>Divertissement</option>
               <option>Santé</option>
               <option>Transport</option>
             </select>
           </div>
-
           <div className="flex justify-start flex-row-reverse gap-4">
-            <button
-              className="cursor-pointer btn btn-ghost"
-              onClick={handleClose}
-            >
-              annuler
-            </button>
-
             <button
               className={
                 transactionType === "revenu"
@@ -74,9 +113,9 @@ export function TransactionsModal({ transactionType, showModal, onClose }) {
             >
               Ajouter
             </button>
-          </div>
-        </DialogContent>
-      </form>
+          </div>{" "}
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }
