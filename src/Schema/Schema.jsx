@@ -14,6 +14,10 @@ export const Schema = yup.object().shape({
 
   date: yup
     .date()
+    .transform((value, originalValue) => {
+      // Transforme une chaîne vide en null
+      return originalValue === "" ? null : value;
+    })
     .required("veuillez selectionner une date")
     .max(new Date(), "La date ne peut pas être dans le futur"),
 });

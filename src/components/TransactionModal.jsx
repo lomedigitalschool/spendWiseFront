@@ -64,7 +64,7 @@ export function TransactionsModal({ transactionType, showModal, onClose }) {
               type="text"
               {...register("amount")}
               placeholder="Montant de la transaction"
-              className="border-gray-600"
+              className={errors.amount ? "border-rose-700" : "border-gray-600"}
             />
           </div>
           {errors.amount && (
@@ -80,7 +80,7 @@ export function TransactionsModal({ transactionType, showModal, onClose }) {
               type="date"
               {...register("date")}
               placeholder="Montant de la transaction"
-              className="border-gray-600"
+              className={errors.date ? "border-rose-700" : "border-gray-600"}
             />
           </div>
           {errors.date && (
