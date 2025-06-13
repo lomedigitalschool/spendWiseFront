@@ -8,16 +8,27 @@ import {
   TableHeader,
   TableRow,
 } from "../components/ui/table";
-import { useTransactionsStore } from "../store/transactionsStores";
+
 import { TransactionsModal } from "../components/TransactionModal";
+import {
+  useTransactionsStore,
+  useTransactionTypeStore,
+} from "../store/transactionsStores";
+import {
+  useModaltypeStore,
+  useSelectedTransaction,
+  useShowModal,
+} from "../store/modalTypeStore";
+import { useState } from "react";
 
 export default function Transactions() {
   const { transactions } = useTransactionsStore();
+  const { showModal, setShowModal } = useShowModal();
+  const { transactionType, setTransactionType } = useTransactionTypeStore();
+  const { modalType, setModalType } = useModaltypeStore();
 
-  const handleEdit = (e) => {
-    e.preventDefault();
-    console.log("hello edit");
-  };
+  const { selectedTransaction, setSelectedTransaction } =
+    useSelectedTransaction();
 
   const handleDelete = (e) => {
     e.preventDefault();
@@ -33,7 +44,12 @@ export default function Transactions() {
         </div>
         {/* transactions table */}
         <Table className="w-[65vw]">
-          <TableCaption>Listes de toutes les transactions</TableCaption>
+          <TableCaption>
+            {transactions
+              ? "Listes de toutes les transaction "
+              : " Auncunes transactions pour le moment"}
+            s
+          </TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px] text-indigo-800">
@@ -79,7 +95,11 @@ export default function Transactions() {
                   <TableCell className="flex justify-end gap-2">
                     <button
                       className=" cursor-pointer hover:scale-105"
-                      onClick={handleEdit}
+                      onClick={() => {
+                        setModalType("edit");
+                        setSelectedTransaction(transaction);
+                        setShowModal(true);
+                      }}
                     >
                       <img
                         className="w-4 h-4 "
@@ -103,10 +123,11 @@ export default function Transactions() {
           </TableBody>
         </Table>
         <TransactionsModal
-          transactionType={transactionsType}
+          transactionType={transactionType}
           showModal={showModal}
           onClose={() => setShowModal(false)}
           modalType={modalType}
+          selectedTransaction={selectedTransaction}
         />
       </div>
     </div>

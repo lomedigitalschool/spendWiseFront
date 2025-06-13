@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Header from "../components/header";
+
 import { TransactionsModal } from "../components/TransactionModal";
 import { Link } from "react-router-dom";
 import {
@@ -11,6 +11,8 @@ import {
   useSelectedTransaction,
   useShowModal,
 } from "../store/modalTypeStore";
+import Nav from "../components/Nav";
+import { getTransactions } from "../lib/fetcher";
 
 export default function Dashboard() {
   const user = "Ro";
@@ -20,30 +22,13 @@ export default function Dashboard() {
   const { transactions, setTransactions } = useTransactionsStore();
   const { modalType, setModalType } = useModaltypeStore();
 
-  const [someTransactions, setSomeTransaction] = useState([]);
-
   const { selectedTransaction, setSelectedTransaction } =
     useSelectedTransaction();
 
   useEffect(() => {
-    const transac = [
-      {
-        id: 1,
-        amount: 500,
-        type: "depense",
-        description: "ravitaillement pour la semaine",
-        category: "divertissement",
-      },
-      {
-        id: 2,
-        amount: 100000,
-        type: "revenu",
-        description: "vente de telephone",
-        category: "business",
-      },
-    ];
+    const response = getTransactions();
 
-    setTransactions(transac);
+    setTransactions(response?.data);
   }, []);
 
   const handleDelete = (e) => {
@@ -53,7 +38,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <Header />
+      <Nav />
       {/* under header */}
       <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-40 ">
         <div className="flex flex-col gap-2 px-3">
@@ -90,55 +75,67 @@ export default function Dashboard() {
             </Link>{" "}
           </div>
           <ul>
-            {transactions.map((transaction) => (
-              <li key={transaction.id}>
-                <div
-                  className={
-                    transaction.type === "revenu"
-                      ? "text-green-600 flex justify-between px-2 py-2  rounded-xl mb-5"
-                      : "text-rose-800 flex justify-between px-2 py-2  rounded-xl mb-5"
-                  }
-                >
-                  <div>
-                    <h2 className="font-semibold">{transaction.description}</h2>
-                    <span className="text-gray-800 capitalize">
-                      {transaction.category}
-                    </span>
-                  </div>
-
-                  <p className="font-semibold flex gap-4 ">
-                    {transaction.type === "revenu" ? "+" : "-"} FCFA{" "}
-                    {transaction.amount}{" "}
-                    <div className="flex gap-1.5 items-start ">
-                      <button
-                        className=" cursor-pointer  hover:scale-105 mt-1"
-                        onClick={() => {
-                          setModalType("edit");
-                          setSelectedTransaction(transaction);
-                          setShowModal(true);
-                        }}
-                      >
-                        <img
-                          className="w-4 h-4 "
-                          src="src/assets/editer.png"
-                          alt="trash icon"
-                        />
-                      </button>
-                      <button
-                        onClick={handleDelete}
-                        className="  cursor-pointer mt-1 hover:scale-105"
-                      >
-                        <img
-                          className="w-4 h-4 "
-                          src="src/assets/trash-close.png"
-                          alt="trash icon"
-                        />
-                      </button>
+            {transactions ? (
+              transactions.map((transaction) => (
+                <li key={transaction.id}>
+                  <div
+                    className={
+                      transaction.type === "revenu"
+                        ? "text-green-600 flex justify-between px-2 py-2  rounded-xl mb-5"
+                        : "text-rose-800 flex justify-between px-2 py-2  rounded-xl mb-5"
+                    }
+                  >
+                    <div>
+                      <h2 className="font-semibold">
+                        {transaction.description}
+                      </h2>
+                      <span className="text-gray-800 capitalize">
+                        {transaction.category}
+                      </span>
                     </div>
-                  </p>
-                </div>
-              </li>
-            ))}
+
+                    <p className="font-semibold flex gap-4 ">
+                      {transaction.type === "revenu" ? "+" : "-"} FCFA{" "}
+                      {transaction.amount}{" "}
+                      <div className="flex gap-1.5 items-start ">
+                        <button
+                          className=" cursor-pointer  hover:scale-105 mt-1"
+                          onClick={() => {
+                            setModalType("edit");
+                            setSelectedTransaction(transaction);
+                            setShowModal(true);
+                          }}
+                        >
+                          <img
+                            className="w-4 h-4 "
+                            src="src/assets/editer.png"
+                            alt="trash icon"
+                          />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setModalType("edit");
+                            setSelectedTransaction(transaction);
+                            setShowModal(true);
+                          }}
+                          className="  cursor-pointer mt-1 hover:scale-105"
+                        >
+                          <img
+                            className="w-4 h-4 "
+                            src="src/assets/trash-close.png"
+                            alt="trash icon"
+                          />
+                        </button>
+                      </div>
+                    </p>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <p className="text-center">
+                Auncunes transactions pour le moment
+              </p>
+            )}
           </ul>
         </div>
         <div className="flex gap-4 justify-end my-4">
