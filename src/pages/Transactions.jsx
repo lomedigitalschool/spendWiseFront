@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "../components/ui/table";
 import { useTransactionsStore } from "../store/transactionsStores";
+import { Link } from "react-router-dom";
 
 export default function Transactions() {
   const { transactions } = useTransactionsStore();
@@ -22,7 +23,7 @@ export default function Transactions() {
           <h1 className="text-4xl font-bold">Transactions</h1>
         </div>
         {/* transactions table */}
-        <Table className="w-[60vw]">
+        <Table className="w-[65vw]">
           <TableCaption>Listes de toutes les transactions</TableCaption>
           <TableHeader>
             <TableRow>
@@ -36,6 +37,9 @@ export default function Transactions() {
 
               <TableHead className="text-right text-indigo-800">
                 Montant
+              </TableHead>
+              <TableHead className="text-right text-indigo-800">
+                Action
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -61,6 +65,16 @@ export default function Transactions() {
                     }
                   >
                     FCFA {transaction?.amount}
+                  </TableCell>
+
+                  <TableCell className="">
+                    <Link to="#" className=" mt-1.5">
+                      <img
+                        className="w-4 h-4"
+                        src="src/assets/trash-close.png"
+                        alt="trash icon"
+                      />
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
