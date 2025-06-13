@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Schema } from "../Schema/Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
