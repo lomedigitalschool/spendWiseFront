@@ -10,15 +10,30 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-label": "^2.1.7",
     "@tailwindcss/vite": "^4.1.9",
     "axios": "^1.9.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.514.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+<<<<<<< HEAD
     "react-hot-toast": "^2.5.2",
     "react-router-dom": "^7.6.2"
+=======
+    "react-hook-form": "^7.57.0",
+    "react-router-dom": "^7.6.2",
+    "tailwind-merge": "^3.3.1",
+    "yup": "^1.6.1",
+    "zustand": "^5.0.5"
+>>>>>>> a584e2d9c488dd6f32d35a07f24cc73413703cbd
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@types/node": "^24.0.1",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -29,9 +44,15 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "postcss": "^8.5.5",
+<<<<<<< HEAD
     "tailwindcss": "^4.1.10",
     "vite": "^6.3.5",
     "vite-plugin-windicss": "^1.9.4",
     "windicss": "^3.5.6"
+=======
+    "tailwindcss": "^4.1.9",
+    "tw-animate-css": "^1.3.4",
+    "vite": "^6.3.5"
+>>>>>>> a584e2d9c488dd6f32d35a07f24cc73413703cbd
   }
 }

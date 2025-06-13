@@ -1,0 +1,178 @@
+import { useEffect, useState } from "react";
+import Header from "../components/header";
+import { TransactionsModal } from "../components/TransactionModal";
+import { Link } from "react-router-dom";
+import {
+  useTransactionsStore,
+  useTransactionTypeStore,
+} from "../store/transactionsStores";
+import {
+  useModaltypeStore,
+  useSelectedTransaction,
+  useShowModal,
+} from "../store/modalTypeStore";
+
+export default function Dashboard() {
+  const user = "Ro";
+  const accountBalance = 300;
+  const { transactionType, setTransactionType } = useTransactionTypeStore();
+  const { showModal, setShowModal } = useShowModal();
+  const { transactions, setTransactions } = useTransactionsStore();
+  const { modalType, setModalType } = useModaltypeStore();
+
+  const [someTransactions, setSomeTransaction] = useState([]);
+
+  const { selectedTransaction, setSelectedTransaction } =
+    useSelectedTransaction();
+
+  useEffect(() => {
+    const transac = [
+      {
+        id: 1,
+        amount: 500,
+        type: "depense",
+        description: "ravitaillement pour la semaine",
+        category: "divertissement",
+      },
+      {
+        id: 2,
+        amount: 100000,
+        type: "revenu",
+        description: "vente de telephone",
+        category: "business",
+      },
+    ];
+
+    setTransactions(transac);
+  }, []);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    console.log("hello delete");
+  };
+
+  return (
+    <>
+      <Header />
+      {/* under header */}
+      <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-40 ">
+        <div className="flex flex-col gap-2 px-3">
+          <h1 className="text-4xl font-bold">Dashboard</h1>
+          <p className="font-semibold text-indigo-800 my-2 ">
+            Bienvenue, {user}{" "}
+          </p>
+        </div>
+        {/* twice Bloc */}
+        <div className="flex gap-20">
+          {/* //Account Bloc */}
+          <div className="my-[4vh] flex flex-col justify-center gap-2  h-[15vh] bg-indigo-500 px-10 rounded-xl w-[25vw]">
+            <p className="text-xl text-white font-semibold">Solde Actuel</p>
+            <h2 className="text-[1.5em] text-white font-bold ">
+              FCFA {accountBalance}{" "}
+            </h2>
+          </div>
+          {/* objectif bloc */}
+          <div className="my-[4vh] flex flex-col justify-center gap-2  h-[15vh] bg-gray-500 px-10 rounded-xl w-[25vw]">
+            <p className="text-xl text-white font-semibold">Objectif 🏁</p>
+            <h2 className="text-[1.5em] text-white font-bold ">
+              FCFA {accountBalance}{" "}
+            </h2>
+          </div>
+        </div>
+        {/* //transaction */}
+        <div className="space-y-4">
+          <div className="flex justify-between">
+            <h1 className="font-bold text-xl indent-1">
+              Transactions recentes
+            </h1>
+            <Link to="/transactions" className=" btn btn-sm btn-ghhost">
+              Voir plus
+            </Link>{" "}
+          </div>
+          <ul>
+            {transactions.map((transaction) => (
+              <li key={transaction.id}>
+                <div
+                  className={
+                    transaction.type === "revenu"
+                      ? "text-green-600 flex justify-between px-2 py-2  rounded-xl mb-5"
+                      : "text-rose-800 flex justify-between px-2 py-2  rounded-xl mb-5"
+                  }
+                >
+                  <div>
+                    <h2 className="font-semibold">{transaction.description}</h2>
+                    <span className="text-gray-800 capitalize">
+                      {transaction.category}
+                    </span>
+                  </div>
+
+                  <p className="font-semibold flex gap-4 ">
+                    {transaction.type === "revenu" ? "+" : "-"} FCFA{" "}
+                    {transaction.amount}{" "}
+                    <div className="flex gap-1.5 items-start ">
+                      <button
+                        className=" cursor-pointer  hover:scale-105 mt-1"
+                        onClick={() => {
+                          setModalType("edit");
+                          setSelectedTransaction(transaction);
+                          setShowModal(true);
+                        }}
+                      >
+                        <img
+                          className="w-4 h-4 "
+                          src="src/assets/editer.png"
+                          alt="trash icon"
+                        />
+                      </button>
+                      <button
+                        onClick={handleDelete}
+                        className="  cursor-pointer mt-1 hover:scale-105"
+                      >
+                        <img
+                          className="w-4 h-4 "
+                          src="src/assets/trash-close.png"
+                          alt="trash icon"
+                        />
+                      </button>
+                    </div>
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="flex gap-4 justify-end my-4">
+          <button
+            className="btn btn-primary"
+            onClick={() => (
+              setTransactionType("revenu"),
+              setShowModal(true),
+              setModalType("create")
+            )}
+          >
+            {" "}
+            + Revenu
+          </button>
+          <button
+            className="btn btn-neutral"
+            onClick={() => (
+              setTransactionType("depense"),
+              setShowModal(true),
+              setModalType("create")
+            )}
+          >
+            {" "}
+            + Depense
+          </button>{" "}
+        </div>
+        <TransactionsModal
+          transactionType={transactionType}
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+          modalType={modalType}
+          selectedTransaction={selectedTransaction}
+        />
+      </div>{" "}
+    </>
+  );
+}
