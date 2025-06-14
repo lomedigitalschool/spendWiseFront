@@ -120,17 +120,17 @@ export function TransactionsModal({
             <Label htmlFor="catergory">Categories</Label>
             <select
               id="category"
-              {...register("category")}
+              {...register("categoryId")}
               className="select select-lg cursor-pointer duration-100 ease-in"
             >
               <option value="">--choisissez une categorie--</option>
-              <option value="Alimentaion">Alimentation</option>
-              <option value="Logement">Logement</option>
-              <option value="Transport">Transport</option>
-              <option value="Loisirs">Loisirs</option>
-              <option value="Santé">Santé</option>
-              <option value="Éducation">Education</option>
-              <option value="Autres">autres</option>
+              <option value="1">Alimentation</option>
+              <option value="2">Logement</option>
+              <option value="3">Transport</option>
+              <option value="4">Loisirs</option>
+              <option value="5">Santé</option>
+              <option value="6">Education</option>
+              <option value="7">autres</option>
             </select>
           </div>
           <div className="flex justify-start flex-row-reverse gap-4">
