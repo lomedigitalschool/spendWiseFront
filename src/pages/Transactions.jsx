@@ -51,24 +51,25 @@ export default function Transactions() {
         <Table className="w-[65vw]">
           <TableCaption>
             {transactions
-              ? "Listes de toutes les transaction "
+              ? "Listes de toutes les transactions "
               : " Auncunes transactions pour le moment"}
-            s
           </TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px] text-indigo-800">
                 Description
               </TableHead>
-              <TableHead className="text-right text-indigo-800">
+              <TableHead className="text-center text-indigo-800">
                 Categorie
               </TableHead>
-              <TableHead className="text-right text-indigo-800">Date</TableHead>
+              <TableHead className="text-center text-indigo-800">
+                Date
+              </TableHead>
 
-              <TableHead className="text-right text-indigo-800">
+              <TableHead className="text-center text-indigo-800">
                 Montant
               </TableHead>
-              <TableHead className="text-right text-indigo-800">
+              <TableHead className="text-center text-indigo-800">
                 Action
               </TableHead>
             </TableRow>
@@ -76,28 +77,28 @@ export default function Transactions() {
           <TableBody>
             {transactions &&
               transactions.map((transaction) => (
-                <TableRow key={transaction.id}>
+                <TableRow key={transaction.id} className="even:bg-gray-200">
                   <TableCell className="font-medium capitalize">
                     {transaction?.description}
                   </TableCell>
-                  <TableCell className="font-medium text-right capitalize">
+                  <TableCell className="font-medium text-center capitalize">
                     {transaction?.category}
                   </TableCell>
-                  <TableCell className="font-medium  capitalize">
-                    {transaction?.date}
+                  <TableCell className="font-medium  capitalize text-center">
+                    {transaction.date ? transaction.date : "-"}
                   </TableCell>
 
                   <TableCell
                     className={
                       transaction?.type === "revenu"
-                        ? "text-green-500 text-right"
-                        : "text-rose-800 text-right"
+                        ? "text-green-500 text-center"
+                        : "text-rose-800 text-center"
                     }
                   >
                     FCFA {transaction?.amount}
                   </TableCell>
 
-                  <TableCell className="flex justify-end gap-2">
+                  <TableCell className="flex justify-center gap-2">
                     <button
                       className=" cursor-pointer hover:scale-105"
                       onClick={() => {
@@ -116,7 +117,7 @@ export default function Transactions() {
                       onClick={() => {
                         handleDelete(transaction.id);
                       }}
-                      className="  cursor-pointer mt-1 hover:scale-105"
+                      className="  cursor-pointer hover:scale-105"
                     >
                       <img
                         className="w-4 h-4 "

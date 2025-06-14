@@ -15,6 +15,7 @@ import Nav from "../components/Nav";
 import { getTransactions } from "../lib/fetcher";
 import { destroyTransactions } from "../lib/poster";
 import toast from "react-hot-toast";
+import Stats from "./Stats";
 
 export default function Dashboard() {
   const user = "Ro";
@@ -27,11 +28,15 @@ export default function Dashboard() {
   const { selectedTransaction, setSelectedTransaction } =
     useSelectedTransaction();
 
+  const [recentTransactions, setRecentTransactions] = useState([]);
+
   useEffect(() => {
     const response = getTransactions();
     if (response.statusText === "OK") {
       setTransactions(response?.data);
     }
+    const lastTransactions = transactions.slice(-3);
+    setRecentTransactions(lastTransactions);
   }, []);
 
   const handleDelete = (transactionId) => {
@@ -47,7 +52,7 @@ export default function Dashboard() {
     <>
       <Nav />
       {/* under header */}
-      <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-40 ">
+      <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-25 ">
         <div className="flex flex-col gap-2 px-3">
           <h1 className="text-4xl font-bold">Dashboard</h1>
           <p className="font-semibold text-indigo-800 my-2 ">
@@ -82,7 +87,7 @@ export default function Dashboard() {
             </Link>{" "}
           </div>
           <ul>
-            {transactions ? (
+            {recentTransactions ? (
               transactions.map((transaction) => (
                 <li key={transaction.id}>
                   <div
@@ -167,6 +172,7 @@ export default function Dashboard() {
             + Depense
           </button>{" "}
         </div>
+        <Stats />
         <TransactionsModal
           transactionType={transactionType}
           showModal={showModal}
@@ -174,7 +180,7 @@ export default function Dashboard() {
           modalType={modalType}
           selectedTransaction={selectedTransaction}
         />
-      </div>{" "}
+      </div>
     </>
   );
 }
