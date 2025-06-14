@@ -45,7 +45,7 @@ export function TransactionsModal({
   const onSubmit = async (data) => {
     data.type = transactionType === "revenu" ? "income" : "expense";
     const response = await poster(data);
-    if (response.statusText === : "OK") {
+    if (response.statusText === "OK") {
       toast.success("transaction ajouté ");
     }
     setTimeout(() => {
