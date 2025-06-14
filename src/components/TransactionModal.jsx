@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { Schema } from "../Schema/Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { poster } from "../lib/poster";
+import { postTransaction } from "../lib/poster";
 import toast from "react-hot-toast";
 
 export function TransactionsModal({
@@ -25,7 +25,7 @@ export function TransactionsModal({
   });
 
   const fields = ["description", "amount", "date", "category"];
-
+  //gestion de du type de modal à afficher
   if (selectedTransaction && modalType === "edit") {
     fields.forEach((field) => {
       if (selectedTransaction[field] !== undefined)
@@ -36,7 +36,7 @@ export function TransactionsModal({
       setValue(field, "");
     });
   }
-
+  // gestion de la fermeture du modal
   const handleClose = () => {
     reset();
     onClose();
@@ -44,7 +44,7 @@ export function TransactionsModal({
 
   const onSubmit = async (data) => {
     data.type = transactionType === "revenu" ? "income" : "expense";
-    const response = await poster(data);
+    const response = await postTransaction(data);
     if (response.statusText === "OK") {
       toast.success("transaction ajouté ");
     }
@@ -120,17 +120,17 @@ export function TransactionsModal({
             <Label htmlFor="catergory">Categories</Label>
             <select
               id="category"
-              {...register("category")}
+              {...register("categoryId")}
               className="select select-lg cursor-pointer duration-100 ease-in"
             >
               <option value="">--choisissez une categorie--</option>
-              <option value="Alimentaion">Alimentation</option>
-              <option value="Logement">Logement</option>
-              <option value="Transport">Transport</option>
-              <option value="Loisirs">Loisirs</option>
-              <option value="Santé">Santé</option>
-              <option value="Éducation">Education</option>
-              <option value="Autres">autres</option>
+              <option value="1">Alimentation</option>
+              <option value="2">Logement</option>
+              <option value="3">Transport</option>
+              <option value="4">Loisirs</option>
+              <option value="5">Santé</option>
+              <option value="6">Education</option>
+              <option value="7">autres</option>
             </select>
           </div>
           <div className="flex justify-start flex-row-reverse gap-4">

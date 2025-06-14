@@ -1,7 +1,37 @@
 import { create } from "zustand";
 
 export const useTransactionsStore = create((set) => ({
-  transactions: [],
+  transactions: [
+    {
+      id: 2,
+      amount: 200,
+      description: "chaussure",
+      categoryId: "autres",
+      type: "depense",
+      date: "2024-03-12",
+    },
+    {
+      id: 3,
+      amount: 800,
+      description: "nourriture",
+      categoryId: "alimentation",
+      type: "revenu",
+    },
+    {
+      id: 4,
+      amount: 100,
+      description: "nourriture",
+      category: "alimentation",
+      type: "depense",
+    },
+    {
+      id: 5,
+      amount: 800,
+      description: "nourriture",
+      categoryId: "alimentation",
+      type: "depense",
+    },
+  ],
   setTransactions: (data) => set({ transactions: data }),
 }));
 

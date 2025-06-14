@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { TransactionsModal } from "../components/TransactionModal";
 import { Link } from "react-router-dom";
 import {
@@ -12,6 +13,9 @@ import {
 } from "../store/modalTypeStore";
 import Nav from "../components/Nav";
 import { getTransactions } from "../lib/fetcher";
+import { destroyTransactions } from "../lib/poster";
+import toast from "react-hot-toast";
+import Stats from "./Stats";
 
 export default function Dashboard() {
   const user = "Ro";
@@ -24,22 +28,31 @@ export default function Dashboard() {
   const { selectedTransaction, setSelectedTransaction } =
     useSelectedTransaction();
 
+  const [recentTransactions, setRecentTransactions] = useState([]);
+
   useEffect(() => {
     const response = getTransactions();
-
-    setTransactions(response?.data);
+    if (response.statusText === "OK") {
+      setTransactions(response?.data);
+    }
+    const lastTransactions = transactions.slice(-3);
+    setRecentTransactions(lastTransactions);
   }, []);
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log("hello delete");
+  const handleDelete = (transactionId) => {
+    const response = destroyTransactions(transactionId);
+    if (response.statusText === "OK") {
+      toast.success("transaction supprimé avec succès");
+    } else {
+      toast.error("error lors de la suppression de la transactiion");
+    }
   };
 
   return (
     <>
       <Nav />
       {/* under header */}
-      <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-40 ">
+      <div className=" max-w-[80vw] max-h-full absolute left-60 right-60 top-25 ">
         <div className="flex flex-col gap-2 px-3">
           <h1 className="text-4xl font-bold">Dashboard</h1>
           <p className="font-semibold text-indigo-800 my-2 ">
@@ -74,7 +87,7 @@ export default function Dashboard() {
             </Link>{" "}
           </div>
           <ul>
-            {transactions ? (
+            {recentTransactions ? (
               transactions.map((transaction) => (
                 <li key={transaction.id}>
                   <div
@@ -108,14 +121,12 @@ export default function Dashboard() {
                           <img
                             className="w-4 h-4 "
                             src="src/assets/editer.png"
-                            alt="trash icon"
+                            alt="edit icon"
                           />
                         </button>
                         <button
                           onClick={() => {
-                            setModalType("edit");
-                            setSelectedTransaction(transaction);
-                            setShowModal(true);
+                            handleDelete(transaction.id);
                           }}
                           className="  cursor-pointer mt-1 hover:scale-105"
                         >
@@ -161,6 +172,7 @@ export default function Dashboard() {
             + Depense
           </button>{" "}
         </div>
+        <Stats />
         <TransactionsModal
           transactionType={transactionType}
           showModal={showModal}
@@ -168,7 +180,7 @@ export default function Dashboard() {
           modalType={modalType}
           selectedTransaction={selectedTransaction}
         />
-      </div>{" "}
+      </div>
     </>
   );
 }
