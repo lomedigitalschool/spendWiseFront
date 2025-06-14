@@ -19,7 +19,7 @@ function Register() {
     }
 
     try {
-      await axios.post('http://localhost:3000/api/signup', {
+      await axios.post('http://localhost:3000/signups', {
         username,
         email,
         password,
