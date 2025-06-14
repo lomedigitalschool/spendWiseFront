@@ -36,7 +36,7 @@ function Register() {
     <div className="min-h-screen flex items-center justify-center bg-app-bg px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white p-8 rounded-lg shadow-md space-y-6"
+        className="w-full max-w-md bg-white p-8 rounded-lg shadow-2xl space-y-6"
         aria-label="Formulaire d'inscription"
 
       >
@@ -49,7 +49,7 @@ function Register() {
         <input
           type="text"
           placeholder="Nom d'utilisateur"
-          className="w-full p-3 bg-blue-100 rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
+          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
@@ -59,7 +59,7 @@ function Register() {
         <input
           type="email"
           placeholder="Adresse email"
-          className="w-full p-3 bg-blue-100 rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
+          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -69,7 +69,7 @@ function Register() {
         <input
           type="password"
           placeholder="Mot de passe"
-          className="w-full p-3 bg-blue-100 rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
+          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -79,23 +79,20 @@ function Register() {
         <input
           type="password"
           placeholder="Confirmer le mot de passe"
-          className="w-full p-3 bg-blue-100 rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
+          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           required
           aria-label="Confirmer le mot de passe"
         />
 
-        <button
-          type="submit"
-          className="w-full bg-solde-bg text-white py-3 rounded hover:bg-indigo-900 transition font-semibold"
-        >
-          S'inscrire
-        </button>
+      <button className="px-40 py-3 bg-blue-700 text-white font-bold border border-blue-900 rounded-lg transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:shadow-md">
+        S'inscrire
+      </button>
 
         <p className="text-center text-text-color text-sm">
           Vous avez déjà un compte ?{' '}
-          <a href="/login" className="text-primary hover:underline font-medium">
+          <a href="/register" className="text-blue-500 hover:underline font-bold">
             Connexion
           </a>
         </p>
