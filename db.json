@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": "04ee",
+      "email": "yanoboston@gmail.com",
+      "password": "victor925"
+    }
+  ],
+  "signups": [
+    {
+      "id": "fc28",
+      "username": "Yano",
+      "email": "yanoboston@gmail.com",
+      "password": "victor925"
+    },
+    {
+      "id": "209a",
+      "username": "farid",
+      "email": "farid@gmail.com",
+      "password": "yannick"
+    }
+  ]
+}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Header from "../components/Header";
 import { TransactionsModal } from "../components/TransactionModal";
 import { Link } from "react-router-dom";
 import {
