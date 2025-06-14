@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../store/useAuthStore"; 
-
+import useAuthStore from "../store/useAuthStore";
 
 import { TransactionsModal } from "../components/TransactionModal";
 import { Link } from "react-router-dom";
@@ -21,12 +20,13 @@ import toast from "react-hot-toast";
 import Stats from "./Stats";
 
 export default function Dashboard() {
-  const user = "Ro";
   const accountBalance = 300;
   const { transactionType, setTransactionType } = useTransactionTypeStore();
   const { showModal, setShowModal } = useShowModal();
   const { transactions, setTransactions } = useTransactionsStore();
   const { modalType, setModalType } = useModaltypeStore();
+  const { user } = useAuthStore();
+  console.log(user);
 
   const { selectedTransaction, setSelectedTransaction } =
     useSelectedTransaction();
@@ -59,7 +59,7 @@ export default function Dashboard() {
         <div className="flex flex-col gap-2 px-3">
           <h1 className="text-4xl font-bold">Dashboard</h1>
           <p className="font-semibold text-indigo-800 my-2 ">
-            Bienvenue, {user}{" "}
+            Bienvenue, {user.email}{" "}
           </p>
         </div>
         {/* twice Bloc */}
@@ -68,14 +68,14 @@ export default function Dashboard() {
           <div className="my-[4vh] flex flex-col justify-center gap-2  h-[15vh] bg-indigo-500 px-10 rounded-xl w-[25vw]">
             <p className="text-xl text-white font-semibold">Solde Actuel</p>
             <h2 className="text-[1.5em] text-white font-bold ">
-              FCFA {accountBalance}{" "}
+              FCFA {user.balance}{" "}
             </h2>
           </div>
           {/* objectif bloc */}
           <div className="my-[4vh] flex flex-col justify-center gap-2  h-[15vh] bg-gray-500 px-10 rounded-xl w-[25vw]">
             <p className="text-xl text-white font-semibold">Objectif 🏁</p>
             <h2 className="text-[1.5em] text-white font-bold ">
-              FCFA {accountBalance}{" "}
+              FCFA {user.balance}{" "}
             </h2>
           </div>
         </div>
@@ -185,6 +185,5 @@ export default function Dashboard() {
         />
       </div>
     </>
-    
   );
 }
