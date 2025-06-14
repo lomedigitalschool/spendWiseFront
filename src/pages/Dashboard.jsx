@@ -13,6 +13,8 @@ import {
 } from "../store/modalTypeStore";
 import Nav from "../components/Nav";
 import { getTransactions } from "../lib/fetcher";
+import { destroyTransactions } from "../lib/poster";
+import toast from "react-hot-toast";
 
 export default function Dashboard() {
   const user = "Ro";
@@ -27,13 +29,18 @@ export default function Dashboard() {
 
   useEffect(() => {
     const response = getTransactions();
-
-    setTransactions(response?.data);
+    if (response.statusText === "OK") {
+      setTransactions(response?.data);
+    }
   }, []);
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log("hello delete");
+  const handleDelete = (transactionId) => {
+    const response = destroyTransactions(transactionId);
+    if (response.statusText === "OK") {
+      toast.success("transaction supprimé avec succès");
+    } else {
+      toast.error("error lors de la suppression de la transactiion");
+    }
   };
 
   return (
@@ -109,14 +116,12 @@ export default function Dashboard() {
                           <img
                             className="w-4 h-4 "
                             src="src/assets/editer.png"
-                            alt="trash icon"
+                            alt="edit icon"
                           />
                         </button>
                         <button
                           onClick={() => {
-                            setModalType("edit");
-                            setSelectedTransaction(transaction);
-                            setShowModal(true);
+                            handleDelete(transaction.id);
                           }}
                           className="  cursor-pointer mt-1 hover:scale-105"
                         >

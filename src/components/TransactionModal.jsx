@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { Schema } from "../Schema/Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { poster } from "../lib/poster";
+import { postTransaction } from "../lib/poster";
 import toast from "react-hot-toast";
 
 export function TransactionsModal({
@@ -25,7 +25,7 @@ export function TransactionsModal({
   });
 
   const fields = ["description", "amount", "date", "category"];
-
+  //gestion de du type de modal à afficher
   if (selectedTransaction && modalType === "edit") {
     fields.forEach((field) => {
       if (selectedTransaction[field] !== undefined)
@@ -36,7 +36,7 @@ export function TransactionsModal({
       setValue(field, "");
     });
   }
-
+  // gestion de la fermeture du modal
   const handleClose = () => {
     reset();
     onClose();
@@ -44,8 +44,8 @@ export function TransactionsModal({
 
   const onSubmit = async (data) => {
     data.type = transactionType === "revenu" ? "income" : "expense";
-    const response = await poster(data);
-    if (response.statusText === : "OK") {
+    const response = await postTransaction(data);
+    if (response.statusText === "OK") {
       toast.success("transaction ajouté ");
     }
     setTimeout(() => {

@@ -19,7 +19,8 @@ import {
   useSelectedTransaction,
   useShowModal,
 } from "../store/modalTypeStore";
-import { useState } from "react";
+import { destroyTransactions } from "../lib/poster";
+import toast from "react-hot-toast";
 
 export default function Transactions() {
   const { transactions } = useTransactionsStore();
@@ -30,9 +31,13 @@ export default function Transactions() {
   const { selectedTransaction, setSelectedTransaction } =
     useSelectedTransaction();
 
-  const handleDelete = (e) => {
-    e.preventDefault();
-    console.log("hello delete");
+  const handleDelete = (transactionId) => {
+    const response = destroyTransactions(transactionId);
+    if (response.statusText === "OK") {
+      toast.success("transaction supprimé avec succès");
+    } else {
+      toast.error("error lors de la suppression de la transactiion");
+    }
   };
 
   return (
@@ -108,7 +113,9 @@ export default function Transactions() {
                       />
                     </button>
                     <button
-                      onClick={handleDelete}
+                      onClick={() => {
+                        handleDelete(transaction.id);
+                      }}
                       className="  cursor-pointer mt-1 hover:scale-105"
                     >
                       <img
