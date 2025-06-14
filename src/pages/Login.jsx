@@ -1,27 +1,28 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { toast } from 'react-hot-toast'
-import logo from '/src/assets/logo.png'
- 
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const navigate = useNavigate()
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/api/login', { email, password })
-      localStorage.setItem('token', response.data.token)
-      toast.success('Connexion réussie !')
-      navigate('/dashboard')
+      const response = await axios.post("http://localhost:3000/api/login", {
+        email,
+        password,
+      });
+      localStorage.setItem("token", response.data.token);
+      toast.success("Connexion réussie !");
+      navigate("/dashboard");
     } catch (err) {
-      toast.error('Email ou mot de passe incorrect.')
+      toast.error("Email ou mot de passe incorrect.");
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-app-bg px-4">
@@ -32,8 +33,11 @@ function Login() {
       >
         {/* Logo centré */}
         <div className="flex justify-center">
-      <img src="/src/assets/logo.png" alt="SpendWise Logo" className="h-20 mb-4" />
-
+          <img
+            src="/src/assets/logo.png"
+            alt="SpendWise Logo"
+            className="h-20 mb-4"
+          />
         </div>
 
       <h2 className="text-3xl font-bold  text-center text-black">
@@ -75,7 +79,7 @@ function Login() {
         </p>
       </form>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

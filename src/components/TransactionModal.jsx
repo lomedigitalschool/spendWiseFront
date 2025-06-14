@@ -1,7 +1,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "./ui/dialog";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Schema } from "../Schema/Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -115,12 +115,14 @@ export function TransactionsModal({
               {...register("category")}
               className="select select-lg cursor-pointer duration-100 ease-in"
             >
-              <option value="">choisissez une categorie</option>
-              <option value="">Alimentation</option>
-              <option>Business</option>
-              <option>Divertissement</option>
-              <option>Santé</option>
-              <option>Transport</option>
+              <option value="">--choisissez une categorie--</option>
+              <option value="Alimentaion">Alimentation</option>
+              <option value="Logement">Logement</option>
+              <option value="Transport">Transport</option>
+              <option value="Loisirs">Loisirs</option>
+              <option value="Santé">Santé</option>
+              <option value="Éducation">Education</option>
+              <option value="Autres">autres</option>
             </select>
           </div>
           <div className="flex justify-start flex-row-reverse gap-4">

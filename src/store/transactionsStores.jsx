@@ -7,5 +7,5 @@ export const useTransactionsStore = create((set) => ({
 
 export const useTransactionTypeStore = create((set) => ({
   transactionType: "depense",
-  setTransactionType: (data) => set({ transctionType: data }),
+  setTransactionType: (data) => set({ transactionType: data }),
 }));
