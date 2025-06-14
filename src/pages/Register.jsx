@@ -19,8 +19,8 @@ function Register() {
     }
 
     try {
-      await axios.post('http://localhost:3000/signups', {
-        username,
+      await axios.post('https://7a68-102-64-146-217.ngrok-free.app/api/users/register', {
+        name,
         email,
         password,
       })
@@ -41,7 +41,7 @@ function Register() {
 
       >
          <div className="flex justify-center">
-      <img src="/src/assets/logo.png" alt="SpendWise Logo" className="h-20 mb-4" />
+      <img src="src/assets/logo.png" alt="SpendWise Logo" className="h-20 mb-4" />
 
         </div>
         <h2 className="text-3xl font-bold text-center text-primary">Créer un compte</h2>
