@@ -59,7 +59,7 @@ export default function Dashboard() {
         <div className="flex flex-col gap-2 px-3">
           <h1 className="text-4xl font-bold">Dashboard</h1>
           <p className="font-semibold text-indigo-800 my-2 ">
-            Bienvenue, {user.email}{" "}
+            Bienvenue, <span className="capitalize">{user.name} </span>
           </p>
         </div>
         {/* twice Bloc */}

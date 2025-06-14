@@ -25,8 +25,8 @@ export default function Nav() {
         <ul className="menu menu-horizontal px-1">
           <li>
             <details>
-              <summary className="text-black font-medium">
-                {user?.email || "Mon Compte"}
+              <summary className="text-black font-medium capitalize">
+                {user?.name || "Mon Compte"}
               </summary>
               <ul className="bg-white p-2 shadow-lg rounded-lg space-y-1 min-w-[160px]">
                 <li>
