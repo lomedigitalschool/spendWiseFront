@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axios from "axios";
 import { toast } from "react-hot-toast";
 import useAuthStore from "../store/useAuthStore";
 
@@ -7,30 +8,24 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
   const login = useAuthStore((state) => state.login);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Simuler un délai d'attente (comme un appel API)
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      const res = await axios.post("https://7a68-102-64-146-217.ngrok-free.app/api/users/login", {
+        email,
+        password,
+      });
 
-      // Vérification simple (exemple : email et password non vides)
-      if (!email || !password) throw new Error("Champs requis");
+      const { token, user } = res.data;
 
-      // Simuler un utilisateur et un token
-      const user = { id: 1, email };
-      const token = "fake-jwt-token";
-
-      // Mettre à jour le store Zustand
-      login(user, token);
-
-      toast.success("Connexion simulée réussie !");
+      login(user, token); // Stocke dans Zustand
+      toast.success("Connexion réussie !");
       navigate("/dashboard");
-    } catch (error) {
-      toast.error("Email ou mot de passe incorrect.");
+    } catch (err) {
+      toast.error("Échec de connexion. Vérifie tes identifiants.");
     }
   };
 
@@ -41,14 +36,10 @@ function Login() {
         className="w-full max-w-md bg-white p-8 rounded-lg shadow-2xl space-y-6"
         aria-label="Formulaire de connexion"
       >
+        {/* Logo et titre */}
         <div className="flex justify-center">
-          <img
-            src="/src/assets/logo.png"
-            alt="SpendWise Logo"
-            className="h-20 mb-4"
-          />
+          <img src="/src/assets/logo.png" alt="SpendWise Logo" className="h-20 mb-4" />
         </div>
-
         <h2 className="text-3xl font-bold text-center text-black">
           Bienvenue sur Spend
           <span className="text-blue-700 italic font-bold">Wise</span>
@@ -57,35 +48,31 @@ function Login() {
         <input
           type="email"
           placeholder="Adresse email"
-          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          aria-label="Adresse email"
+          className="w-full p-3 rounded border text-black border-gray-300"
         />
 
         <input
           type="password"
           placeholder="Mot de passe"
-          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          aria-label="Mot de passe"
+          className="w-full p-3 rounded border text-black border-gray-300"
         />
 
         <button
           type="submit"
-          className="w-full py-3 bg-blue-700 text-white font-bold border border-blue-900 rounded-lg transition duration-300 ease-in-out hover:bg-blue-500 hover:shadow-md"
+          className="w-full py-3 bg-blue-700 text-white font-bold rounded-lg hover:bg-blue-600"
         >
           Se Connecter
         </button>
 
-        <p className="text-center text-text-color text-sm">
+        <p className="text-center text-sm text-text-color">
           Pas encore de compte ?{" "}
-          <Link to="/register" className="text-blue-500 hover:underline font-bold">
-            Inscription
-          </Link>
+          <Link to="/register" className="text-blue-500 font-bold">Inscription</Link>
         </p>
       </form>
     </div>

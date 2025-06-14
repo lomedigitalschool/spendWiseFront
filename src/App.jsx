@@ -1,7 +1,6 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom"; // plus d'import de BrowserRouter ici
+import { Routes, Route } from "react-router-dom";
 import { useEffect } from "react";
-import axios from "axios";
 
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
@@ -11,23 +10,10 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import useAuthStore from "./store/useAuthStore";
 
 function App() {
-  const { login } = useAuthStore();
+  const initialize = useAuthStore((state) => state.initialize); // Fonction pour charger depuis localStorage
 
-  // Charger l'utilisateur si un token est déjà présent (auto-login)
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      axios
-        .get("http://localhost:3000/api/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          login({ ...res.data, token });
-        })
-        .catch(() => {
-          localStorage.removeItem("token");
-        });
-    }
+    initialize(); // On restaure l'utilisateur à partir du localStorage au démarrage
   }, []);
 
   return (
