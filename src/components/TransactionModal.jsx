@@ -4,6 +4,8 @@ import { Input } from "./ui/input";
 import { useForm } from "react-hook-form";
 import { Schema } from "../Schema/Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { poster } from "../lib/poster";
+import toast from "react-hot-toast";
 
 export function TransactionsModal({
   transactionType,
@@ -15,7 +17,6 @@ export function TransactionsModal({
   const {
     register,
     setValue,
-    getValues,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
@@ -41,8 +42,15 @@ export function TransactionsModal({
     onClose();
   };
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    data.type = transactionType === "revenu" ? "income" : "expense";
+    const response = await poster(data);
+    if (response.statusText === : "OK") {
+      toast.success("transaction ajouté ");
+    }
+    setTimeout(() => {
+      handleClose();
+    }, 1000);
   };
 
   return (
@@ -132,9 +140,10 @@ export function TransactionsModal({
                   ? "btn btn-primary"
                   : "btn btn-neutral"
               }
+              disabled={isSubmitting}
               type="submit"
             >
-              Ajouter
+              {isSubmitting ? "Ajout en cours..." : "Ajouter"}
             </button>
           </div>{" "}
         </form>

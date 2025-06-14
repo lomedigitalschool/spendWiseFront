@@ -8,8 +8,8 @@ import { Toaster } from "react-hot-toast";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Router>
-      <App />
       <Toaster position="top-center" reverseOrder={false} />
+      <App />
     </Router>
   </StrictMode>
 );
