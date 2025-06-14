@@ -28,7 +28,7 @@ function Login() {
     <div className="min-h-screen flex items-center justify-center bg-app-bg px-4">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md bg-white p-8 rounded-lg shadow-md space-y-6"
+        className="w-full max-w-md bg-white p-8 rounded-lg shadow-2xl space-y-6"
         aria-label="Formulaire de connexion"
       >
         {/* Logo centré */}
@@ -40,14 +40,16 @@ function Login() {
           />
         </div>
 
-        <h2 className="text-3xl font-bold text-center text-primary">
-          Bienvenue sur SpendWise
-        </h2>
+      <h2 className="text-3xl font-bold  text-center text-black">
+        Bienvenue sur Spend
+        <span className="text-blue-700">Wise</span>
+      </h2>
+
 
         <input
           type="email"
           placeholder="Adresse email"
-          className="w-full p-3 bg-blue-100 rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
+          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -57,26 +59,21 @@ function Login() {
         <input
           type="password"
           placeholder="Mot de passe"
-          className="w-full p-3 bg-blue-100 rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
+          className="w-full p-3 bg-white rounded text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary transition"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
           aria-label="Mot de passe"
         />
 
-        <button
-          type="submit"
-          className="w-full bg-solde-bg text-white py-3 rounded hover:bg-indigo-900 transition font-semibold"
-        >
-          Se connecter
-        </button>
+      <button className="px-35 py-3 bg-blue-700 text-white font-bold border border-blue-900 rounded-lg transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:shadow-md">
+        Se Connecter
+      </button>
+
 
         <p className="text-center text-text-color text-sm">
-          Pas encore de compte ?{" "}
-          <a
-            href="/register"
-            className="text-primary hover:underline font-medium"
-          >
+          Pas encore de compte ?{' '}
+          <a href="/register" className="text-blue-500 hover:underline font-bold">
             Inscription
           </a>
         </p>
