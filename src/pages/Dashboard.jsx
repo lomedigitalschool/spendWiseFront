@@ -102,7 +102,7 @@ export default function Dashboard() {
                         {transaction.description}
                       </h2>
                       <span className="text-gray-800 capitalize">
-                        {transaction.category}
+                        {transaction.category?.name}
                       </span>
                     </div>
 

@@ -17,6 +17,7 @@ function Login() {
         password,
       });
       localStorage.setItem("token", response.data.token);
+
       toast.success("Connexion réussie !");
       navigate("/dashboard");
     } catch (err) {
@@ -40,11 +41,10 @@ function Login() {
           />
         </div>
 
-      <h2 className="text-3xl font-bold  text-center text-black">
-        Bienvenue sur Spend
-        <span className="text-blue-700">Wise</span>
-      </h2>
-
+        <h2 className="text-3xl font-bold  text-center text-black">
+          Bienvenue sur Spend
+          <span className="text-blue-700">Wise</span>
+        </h2>
 
         <input
           type="email"
@@ -66,14 +66,16 @@ function Login() {
           aria-label="Mot de passe"
         />
 
-      <button className="px-35 py-3 bg-blue-700 text-white font-bold border border-blue-900 rounded-lg transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:shadow-md">
-        Se Connecter
-      </button>
-
+        <button className="px-35 py-3 bg-blue-700 text-white font-bold border border-blue-900 rounded-lg transition duration-300 ease-in-out hover:bg-blue-500 hover:text-white hover:shadow-md">
+          Se Connecter
+        </button>
 
         <p className="text-center text-text-color text-sm">
-          Pas encore de compte ?{' '}
-          <a href="/register" className="text-blue-500 hover:underline font-bold">
+          Pas encore de compte ?{" "}
+          <a
+            href="/register"
+            className="text-blue-500 hover:underline font-bold"
+          >
             Inscription
           </a>
         </p>

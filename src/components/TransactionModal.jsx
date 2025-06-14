@@ -24,7 +24,7 @@ export function TransactionsModal({
     resolver: yupResolver(Schema),
   });
 
-  const fields = ["description", "amount", "date", "category"];
+  const fields = ["description", "amount", "date", "categoryId"];
   //gestion de du type de modal à afficher
   if (selectedTransaction && modalType === "edit") {
     fields.forEach((field) => {
@@ -44,9 +44,14 @@ export function TransactionsModal({
 
   const onSubmit = async (data) => {
     data.type = transactionType === "revenu" ? "income" : "expense";
+
     const response = await postTransaction(data);
     if (response.statusText === "OK") {
       toast.success("transaction ajouté ");
+    } else if (!response) {
+      console.log(response);
+
+      // toast.error("error lors de l'ajout");
     }
     setTimeout(() => {
       handleClose();
