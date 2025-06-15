@@ -43,19 +43,26 @@ export function TransactionsModal({
   };
 
   const onSubmit = async (data) => {
-    data.type = transactionType === "revenu" ? "income" : "expense";
+    // data.type = transactionType === "revenu" ? "income" : "expense";
+    data = {
+      amount: 100,
+      type: "income",
+      description: "salaire",
+      date: "2025-06-14",
+      categoryId: 1,
+    };
 
     const response = await postTransaction(data);
     if (response.statusText === "OK") {
       toast.success("transaction ajouté ");
-    } else if (!response) {
-      console.log(response);
+      setTimeout(() => {
+        handleClose();
+      }, 1000);
+    } else if (response.message) {
+      toast.error("erreur lors de l'ajout");
 
       // toast.error("error lors de l'ajout");
     }
-    setTimeout(() => {
-      handleClose();
-    }, 1000);
   };
 
   return (

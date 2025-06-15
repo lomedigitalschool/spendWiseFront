@@ -19,14 +19,12 @@ export const postTransaction = (data) => {
 
 export const destroyTransactions = (transactionId) => {
   axios
-    .delete(url + `/api/transactions/${transactionId}`, {})
+    .delete(url + `/api/transactions/${transactionId}`)
     .then((resp) => {
       const response = resp;
       return response;
     })
     .catch((error) => {
-      console.log(error);
-
-      return false;
+      return error;
     });
 };
