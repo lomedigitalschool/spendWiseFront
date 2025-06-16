@@ -20,7 +20,7 @@ function Register() {
 
     try {
       await axios.post(
-        "https://7a68-102-64-146-217.ngrok-free.app/api/users/register",
+        "https://4ceb-102-64-146-217.ngrok-free.app/api/users/register",
         {
           name,
           email,
