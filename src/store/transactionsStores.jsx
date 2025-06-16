@@ -2,7 +2,10 @@ import { create } from "zustand";
 
 export const useTransactionsStore = create((set) => ({
   transactions: [],
-  setTransactions: (data) => set({ transactions: data }),
+  setTransactions: (data) =>
+    set((state) => ({
+      transactions: [...state.transactions, data],
+    })),
 }));
 
 export const useTransactionTypeStore = create((set) => ({

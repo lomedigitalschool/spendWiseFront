@@ -6,6 +6,8 @@ import { Schema } from "../Schema/Schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { postTransaction } from "../lib/poster";
 import toast from "react-hot-toast";
+import { useTransactionsStore } from "../store/transactionsStores";
+import Transactions from "../pages/Transactions";
 
 export function TransactionsModal({
   transactionType,
@@ -23,8 +25,10 @@ export function TransactionsModal({
   } = useForm({
     resolver: yupResolver(Schema),
   });
+  const { transactions, setTransactions } = useTransactionsStore();
 
   const fields = ["description", "amount", "date", "categoryId"];
+
   //gestion de du type de modal à afficher
   if (selectedTransaction && modalType === "edit") {
     fields.forEach((field) => {
@@ -43,14 +47,19 @@ export function TransactionsModal({
   };
 
   const onSubmit = async (data) => {
-    // data.type = transactionType === "revenu" ? "income" : "expense";
-    data = {
-      amount: 100,
-      type: "income",
-      description: "salaire",
-      date: "2025-06-14",
-      categoryId: 1,
-    };
+    data.type = transactionType === "revenu" ? "income" : "expense";
+
+    // setTransactions(data);
+    // console.log(data);
+    // console.log(transactions);
+
+    // data = {
+    //   amount: 100,
+    //   type: "income",
+    //   description: "salaire",
+    //   date: "2025-06-14",
+    //   categoryId: 1,
+    // };
 
     const response = await postTransaction(data);
     if (response.statusText === "OK") {
@@ -60,8 +69,6 @@ export function TransactionsModal({
       }, 1000);
     } else if (response.message) {
       toast.error("erreur lors de l'ajout");
-
-      // toast.error("error lors de l'ajout");
     }
   };
 
@@ -136,13 +143,13 @@ export function TransactionsModal({
               className="select select-lg cursor-pointer duration-100 ease-in"
             >
               <option value="">--choisissez une categorie--</option>
-              <option value={1}>Alimentation</option>
-              <option value={2}>Logement</option>
-              <option value={3}>Transport</option>
-              <option value={4}>Loisirs</option>
-              <option value={5}>Santé</option>
-              <option value={6}>Education</option>
-              <option value={7}>autres</option>
+              <option value="Alimentation">Alimentation</option>
+              <option value="Logement">Logement</option>
+              <option value="Transport">Transport</option>
+              <option value="Loisirs">Loisirs</option>
+              <option value="Santé">Santé</option>
+              <option value="Education">Education</option>
+              <option value="autres">autres</option>
             </select>
           </div>
           <div className="flex justify-start flex-row-reverse gap-4">

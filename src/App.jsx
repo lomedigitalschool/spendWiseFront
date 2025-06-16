@@ -25,18 +25,18 @@ function App() {
       <Route
         path="/dashboard"
         element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <Dashboard />
+          /* </ProtectedRoute> */
         }
       />
 
       <Route
         path="/transactions"
         element={
-          <ProtectedRoute>
-            <Transactions />
-          </ProtectedRoute>
+          // <ProtectedRoute>
+          <Transactions />
+          /* </ProtectedRoute> */
         }
       />
     </Routes>

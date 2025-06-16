@@ -88,12 +88,12 @@ export default function Dashboard() {
             </Link>{" "}
           </div>
           <ul>
-            {recentTransactions ? (
+            {transactions ? (
               transactions.map((transaction) => (
                 <li key={transaction.id}>
                   <div
                     className={
-                      transaction.type === "revenu"
+                      transaction.type === "income"
                         ? "text-green-600 flex justify-between px-2 py-2  rounded-xl mb-5"
                         : "text-rose-800 flex justify-between px-2 py-2  rounded-xl mb-5"
                     }
@@ -108,7 +108,7 @@ export default function Dashboard() {
                     </div>
 
                     <p className="font-semibold flex gap-4 ">
-                      {transaction.type === "revenu" ? "+" : "-"} FCFA{" "}
+                      {transaction.type === "income" ? "+" : "-"} FCFA{" "}
                       {transaction.amount}{" "}
                       <div className="flex gap-1.5 items-start ">
                         <button
