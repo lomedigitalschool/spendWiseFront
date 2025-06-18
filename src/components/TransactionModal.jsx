@@ -49,25 +49,14 @@ export function TransactionsModal({
   const onSubmit = async (data) => {
     data.type = transactionType === "revenu" ? "income" : "expense";
 
-    // setTransactions(data);
-    // console.log(data);
-    // console.log(transactions);
-
-    // data = {
-    //   amount: 100,
-    //   type: "income",
-    //   description: "salaire",
-    //   date: "2025-06-14",
-    //   categoryId: 1,
-    // };
-
-    const response = await postTransaction(data);
-    if (response.statusText === "OK") {
+    const response = await postTransaction({ ...data });
+    console.log(response);
+    if ((await response.status) === 201) {
       toast.success("transaction ajouté ");
       setTimeout(() => {
         handleClose();
       }, 1000);
-    } else if (response.message) {
+    } else if (response.status !== 201) {
       toast.error("erreur lors de l'ajout");
     }
   };

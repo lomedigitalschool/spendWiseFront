@@ -22,7 +22,7 @@ import Stats from "./Stats";
 export default function Dashboard() {
   const { transactionType, setTransactionType } = useTransactionTypeStore();
   const { showModal, setShowModal } = useShowModal();
-  const { transactions, setTransactions } = useTransactionsStore();
+  const { transactions, initeState } = useTransactionsStore();
   const { modalType, setModalType } = useModaltypeStore();
   const { user } = useAuthStore();
 
@@ -32,14 +32,22 @@ export default function Dashboard() {
   const [recentTransactions, setRecentTransactions] = useState([]);
 
   useEffect(() => {
-    const response = getTransactions();
-    if (response.statusText === "OK") {
-      setTransactions(response?.data);
-    }
+    const gettter = async () => {
+      const response = await getTransactions();
+      console.log(response);
+
+      if (response?.data?.data?.transactions?.length) {
+        initeState(response.data.data.transactions);
+      }
+      //
+    };
+    gettter();
     const lastTransactions = transactions.slice(-3);
     setRecentTransactions(lastTransactions);
+    console.log(recentTransactions);
   }, []);
 
+  // console.log(transactions);
   const handleDelete = (transactionId) => {
     const response = destroyTransactions(transactionId);
     if (response.statusText === "OK") {
@@ -88,8 +96,8 @@ export default function Dashboard() {
             </Link>{" "}
           </div>
           <ul>
-            {transactions && transactions.length !== 0 ? (
-              transactions.map((transaction) => (
+            {recentTransactions && recentTransactions.length !== 0 ? (
+              transactions?.map((transaction) => (
                 <li key={transaction.id}>
                   <div
                     className={

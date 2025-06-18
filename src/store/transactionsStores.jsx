@@ -6,6 +6,10 @@ export const useTransactionsStore = create((set) => ({
     set((state) => ({
       transactions: [...state.transactions, data],
     })),
+  initeState: (data) =>
+    set(() => ({
+      transactions: data,
+    })),
 }));
 
 export const useTransactionTypeStore = create((set) => ({
