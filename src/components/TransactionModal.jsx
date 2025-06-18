@@ -143,13 +143,13 @@ export function TransactionsModal({
               className="select select-lg cursor-pointer duration-100 ease-in"
             >
               <option value="">--choisissez une categorie--</option>
-              <option value="Alimentation">Alimentation</option>
-              <option value="Logement">Logement</option>
-              <option value="Transport">Transport</option>
-              <option value="Loisirs">Loisirs</option>
-              <option value="Santé">Santé</option>
-              <option value="Education">Education</option>
-              <option value="autres">autres</option>
+              <option value="1">Alimentation</option>
+              <option value="2">Logement</option>
+              <option value="3">Transport</option>
+              <option value="4">Loisirs</option>
+              <option value="5">Santé</option>
+              <option value="6">Education</option>
+              <option value="7">autres</option>
             </select>
           </div>
           <div className="flex justify-start flex-row-reverse gap-4">
