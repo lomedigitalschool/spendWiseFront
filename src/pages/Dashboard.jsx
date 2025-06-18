@@ -34,7 +34,6 @@ export default function Dashboard() {
   useEffect(() => {
     const gettter = async () => {
       const response = await getTransactions();
-      console.log(response);
 
       if (response?.data?.data?.transactions?.length) {
         initeState(response.data.data.transactions);
@@ -44,13 +43,11 @@ export default function Dashboard() {
     gettter();
     const lastTransactions = transactions.slice(-3);
     setRecentTransactions(lastTransactions);
-    console.log(recentTransactions);
   }, []);
 
-  // console.log(transactions);
   const handleDelete = (transactionId) => {
     const response = destroyTransactions(transactionId);
-    if (response.statusText === "OK") {
+    if (response.status === 201) {
       toast.success("transaction supprimé avec succès");
     } else {
       toast.error("error lors de la suppression de la transactiion");
@@ -97,7 +94,7 @@ export default function Dashboard() {
           </div>
           <ul>
             {recentTransactions && recentTransactions.length !== 0 ? (
-              transactions?.map((transaction) => (
+              recentTransactions?.map((transaction) => (
                 <li key={transaction.id}>
                   <div
                     className={
@@ -107,7 +104,7 @@ export default function Dashboard() {
                     }
                   >
                     <div>
-                      <h2 className="font-semibold">
+                      <h2 className="font-semibold capitalize">
                         {transaction.description}
                       </h2>
                       <span className="text-gray-800 capitalize">

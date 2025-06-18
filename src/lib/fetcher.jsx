@@ -9,7 +9,6 @@ export async function getTransactions() {
   let errorFetch = undefined;
   try {
     const response = await axios.get(url + "/api/transactions");
-    // console.log(response);
 
     return response;
   } catch (error) {
