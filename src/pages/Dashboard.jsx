@@ -88,7 +88,7 @@ export default function Dashboard() {
             </Link>{" "}
           </div>
           <ul>
-            {transactions ? (
+            {transactions && transactions.length !== 0 ? (
               transactions.map((transaction) => (
                 <li key={transaction.id}>
                   <div

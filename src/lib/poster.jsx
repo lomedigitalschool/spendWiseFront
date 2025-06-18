@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = "https://4ceb-102-64-146-217.ngrok-free.app";
+const url = "https://pike-inter-agenda-france.trycloudflare.com";
 const token = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
