@@ -43,7 +43,7 @@ export default function Dashboard() {
     gettter();
     const lastTransactions = transactions.slice(-3);
     setRecentTransactions(lastTransactions);
-  }, []);
+  }, [transactions]);
 
   const handleDelete = (transactionId) => {
     const response = destroyTransactions(transactionId);
@@ -108,7 +108,7 @@ export default function Dashboard() {
                         {transaction.description}
                       </h2>
                       <span className="text-gray-800 capitalize">
-                        {transaction.category?.name}
+                        <p>{transaction.category?.name}</p>
                       </span>
                     </div>
 

@@ -7,7 +7,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { postTransaction } from "../lib/poster";
 import toast from "react-hot-toast";
 import { useTransactionsStore } from "../store/transactionsStores";
-import Transactions from "../pages/Transactions";
+import { getTransactions } from "../lib/fetcher";
+import { useEffect } from "react";
 
 export function TransactionsModal({
   transactionType,
@@ -56,6 +57,17 @@ export function TransactionsModal({
       setTimeout(() => {
         handleClose();
       }, 1000);
+      handleClose();
+
+      const gettter = async () => {
+        const response = await getTransactions();
+
+        if (response?.data?.data?.transactions?.length) {
+          setTransactions(response.data.data.transactions);
+        }
+        //
+      };
+      gettter();
     } else if (response.status !== 201) {
       toast.error("erreur lors de l'ajout");
     }
