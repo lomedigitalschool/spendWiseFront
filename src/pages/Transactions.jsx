@@ -32,9 +32,10 @@ export default function Transactions() {
     useSelectedTransaction();
   console.log(transactions);
 
-  const handleDelete = (transactionId) => {
-    const response = destroyTransactions(transactionId);
-    if (response.statusText === "OK") {
+  const handleDelete = async (transactionId) => {
+    const response = await destroyTransactions(transactionId);
+    // console.log(response);
+    if (response.status === 200) {
       toast.success("transaction supprimé avec succès");
     } else {
       toast.error("error lors de la suppression de la transactiion");
@@ -91,7 +92,7 @@ export default function Transactions() {
 
                   <TableCell
                     className={
-                      transaction?.type === "revenu"
+                      transaction?.type === "income"
                         ? "text-green-500 text-center"
                         : "text-rose-800 text-center"
                     }

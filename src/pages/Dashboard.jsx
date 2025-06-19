@@ -43,11 +43,11 @@ export default function Dashboard() {
     gettter();
     const lastTransactions = transactions.slice(-3);
     setRecentTransactions(lastTransactions);
-  }, [transactions]);
+  }, []);
 
-  const handleDelete = (transactionId) => {
-    const response = destroyTransactions(transactionId);
-    if (response.status === 201) {
+  const handleDelete = async (transactionId) => {
+    const response = await destroyTransactions(transactionId);
+    if (response.status === 200) {
       toast.success("transaction supprimé avec succès");
     } else {
       toast.error("error lors de la suppression de la transactiion");
