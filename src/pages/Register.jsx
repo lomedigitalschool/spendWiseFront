@@ -99,10 +99,7 @@ function Register() {
 
         <p className="text-center text-text-color text-sm">
           Vous avez déjà un compte ?{" "}
-          <a
-            href="/register"
-            className="text-blue-500 hover:underline font-bold"
-          >
+          <a href="/" className="text-blue-500 hover:underline font-bold">
             Connexion
           </a>
         </p>
