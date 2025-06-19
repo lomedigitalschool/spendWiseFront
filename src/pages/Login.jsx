@@ -9,18 +9,16 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const login = useAuthStore((state) => state.login);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "https://pike-inter-agenda-france.trycloudflare.com/api/users/login",
-        {
-          email,
-          password,
-        }
-      );
+      const res = await axios.post(`${apiUrl}/api/users/login`, {
+        email,
+        password,
+      });
 
       const { token, user } = res.data;
 

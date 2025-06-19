@@ -1,12 +1,12 @@
 import axios from "axios";
 
-const url = "https://pike-inter-agenda-france.trycloudflare.com";
+const apiUrl = import.meta.env.VITE_API_URL;
 const token = localStorage.getItem("token");
 axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
 export const postTransaction = async (data) => {
   return axios
-    .post(url + "/api/transactions", { ...data })
+    .post(apiUrl + "/api/transactions", { ...data })
     .then((response) => {
       return response;
     })
@@ -19,7 +19,7 @@ export const postTransaction = async (data) => {
 
 export const destroyTransactions = (transactionId) => {
   return axios
-    .delete(url + `/api/transactions/${transactionId}`)
+    .delete(apiUrl + `/api/transactions/${transactionId}`)
     .then((resp) => {
       const response = resp;
       return response;

@@ -9,6 +9,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,14 +20,11 @@ function Register() {
     }
 
     try {
-      await axios.post(
-        "https://pike-inter-agenda-france.trycloudflare.com/api/users/register",
-        {
-          name,
-          email,
-          password,
-        }
-      );
+      await axios.post(`${apiUrl}/api/users/register`, {
+        name,
+        email,
+        password,
+      });
 
       toast.success("Inscription réussie !");
       navigate("/login");
