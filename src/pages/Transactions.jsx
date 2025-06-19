@@ -30,6 +30,7 @@ export default function Transactions() {
 
   const { selectedTransaction, setSelectedTransaction } =
     useSelectedTransaction();
+  console.log(transactions);
 
   const handleDelete = (transactionId) => {
     const response = destroyTransactions(transactionId);
@@ -82,7 +83,7 @@ export default function Transactions() {
                     {transaction?.description}
                   </TableCell>
                   <TableCell className="font-medium text-center capitalize">
-                    {transaction?.category}
+                    {transaction?.Category?.name}
                   </TableCell>
                   <TableCell className="font-medium  capitalize text-center">
                     {transaction.date ? transaction.date : "-"}
