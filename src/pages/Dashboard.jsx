@@ -51,8 +51,8 @@ export default function Dashboard() {
     if (response.status === 200) {
       const indexTransactions = transactions.indexOf(transactionId);
       const transactionsCopy = [...transactions];
-
       const transactionRemove = transactionsCopy.splice(indexTransactions, 1);
+
       setTransactions(transactionsCopy);
       toast.success(
         `transaction ${transactionRemove[0].description}  supprimé avec succès ✅`
