@@ -22,7 +22,7 @@ import Stats from "./Stats";
 export default function Dashboard() {
   const { transactionType, setTransactionType } = useTransactionTypeStore();
   const { showModal, setShowModal } = useShowModal();
-  const { transactions, initeState } = useTransactionsStore();
+  const { transactions, initeState, setTransactions } = useTransactionsStore();
   const { modalType, setModalType } = useModaltypeStore();
   const { user } = useAuthStore();
 
@@ -50,7 +50,7 @@ export default function Dashboard() {
 
     if (response.status === 200) {
       const indexTransactions = transactions.indexOf(transactionId);
-      const transactionsCopy = transactions;
+      const transactionsCopy = [...transactions];
 
       const transactionRemove = transactionsCopy.splice(indexTransactions, 1);
       setTransactions(transactionsCopy);

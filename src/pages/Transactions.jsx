@@ -34,9 +34,9 @@ export default function Transactions() {
     const response = await destroyTransactions(transactionId);
 
     if (response.status === 200) {
-      const indexTransactions = transactions.indexOf(transactionId);
-      const transactionsCopy = transactions;
-      const transactionRemove = transactionsCopy.splice(indexTransactions, 1);
+      const indexTransaction = transactions.indexOf(transactionId);
+      const transactionsCopy = [...transactions];
+      const transactionRemove = transactionsCopy.splice(indexTransaction, 1);
 
       setTransactions(transactionsCopy);
       toast.success(
