@@ -36,6 +36,8 @@ export default function Transactions() {
     const response = await destroyTransactions(transactionId);
     // console.log(response);
     if (response.status === 200) {
+      const indexTransactions = transactions.indexOf(transactionId);
+      transactions.splice(indexTransactions, 1);
       toast.success("transaction supprimé avec succès");
     } else {
       toast.error("error lors de la suppression de la transactiion");
