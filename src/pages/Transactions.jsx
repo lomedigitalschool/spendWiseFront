@@ -23,24 +23,27 @@ import { destroyTransactions } from "../lib/poster";
 import toast from "react-hot-toast";
 
 export default function Transactions() {
-  const { transactions } = useTransactionsStore();
+  const { transactions, setTransactions } = useTransactionsStore();
   const { showModal, setShowModal } = useShowModal();
   const { transactionType, setTransactionType } = useTransactionTypeStore();
   const { modalType, setModalType } = useModaltypeStore();
-
   const { selectedTransaction, setSelectedTransaction } =
     useSelectedTransaction();
-  console.log(transactions);
 
   const handleDelete = async (transactionId) => {
     const response = await destroyTransactions(transactionId);
-    // console.log(response);
+
     if (response.status === 200) {
       const indexTransactions = transactions.indexOf(transactionId);
-      transactions.splice(indexTransactions, 1);
-      toast.success("transaction supprimé avec succès");
+      const transactionsCopy = transactions;
+      const transactionRemove = transactionsCopy.splice(indexTransactions, 1);
+
+      setTransactions(transactionsCopy);
+      toast.success(
+        `transaction ${transactionRemove[0].description}  supprimé avec succès ✅`
+      );
     } else {
-      toast.error("error lors de la suppression de la transactiion");
+      toast.error("error lors de la suppression de la transactiion❌");
     }
   };
 
